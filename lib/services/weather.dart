@@ -10,10 +10,19 @@ Future<dynamic> getLocationWeather() async {
   Location locationObj = new Location();
   await locationObj.getCurrentLocation();
 
-  print("Location acquired");NetworkHelper networkHelper = NetworkHelper('$owmURL?lat=${locationObj.latitude}&lon=${locationObj.longitude}&units=imperial&appid=$apiKey');
+  print("Location acquired");
+  
+  NetworkHelper networkHelper = NetworkHelper('$owmURL?lat=${locationObj.latitude}&lon=${locationObj.longitude}&units=imperial&appid=$apiKey');
 
   var weatherData = await networkHelper.getData();
 
+  return weatherData;
+}
+
+Future<dynamic> getCityWeather(String cityName) async {
+  NetworkHelper networkHelper = NetworkHelper('$owmURL?q=$cityName&appid=$apiKey&units=imperial');
+
+  var weatherData = await networkHelper.getData();
   return weatherData;
 }
 
