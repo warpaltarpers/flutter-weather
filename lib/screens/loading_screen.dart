@@ -27,19 +27,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Location locationObj = new Location();
     await locationObj.getCurrentLocation();
 
-    print("Location acquired");
-    
-    latitude = locationObj.latitude;
-    longitude = locationObj.longitude;
-
-    print("Lat: $latitude, Lon: $longitude");
-
-    NetworkHelper networkHelper = NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+    print("Location acquired");NetworkHelper networkHelper = NetworkHelper('https://api.openweathermap.org/data/2.5/weather?lat=${locationObj.latitude}&lon=${locationObj.longitude}&units=imperial&appid=$apiKey');
 
     var weatherData = await networkHelper.getData();
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LocationScreen();
+      return LocationScreen(locationWeather: weatherData,);
     }));
   }
   
